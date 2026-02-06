@@ -359,7 +359,41 @@ h1 {
 }
 
 .history-day.l-4 {
-    background: var(--accent-blue);
-    color: #fff;
-    box-shadow: 0 0 5px var(--accent-blue);
+background: var(--accent-blue);
+color: #fff;
+box-shadow: 0 0 5px var(--accent-blue);
+}
+
+/* Backup Section */
+.backup-section {
+    background: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.backup-section h2 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: var(--text-muted);
+}
+
+.backup-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.backup-btn {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #444;
+    background: #333;
+    color: var(--text-main);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.backup-btn:hover {
+    background: #444;
 }
