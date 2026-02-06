@@ -190,4 +190,20 @@ class Store {
     getTodayData() {
         return this.state.history[this.getTodayDate()];
     }
+
+    importState(jsonString) {
+        try {
+            const data = JSON.parse(jsonString);
+            // Basic validation
+            if (!data.history || !data.config) {
+                throw new Error("Invalid data format");
+            }
+            this.state = data;
+            this.save();
+            return true;
+        } catch (e) {
+            console.error("Import failed:", e);
+            return false;
+        }
+    }
 }
