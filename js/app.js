@@ -42,6 +42,50 @@ const app = {
             });
         }
 
+        // --- Data Backup Handlers ---
+
+        // Export
+        const exportBtn = document.getElementById('export-btn');
+        if (exportBtn) {
+            exportBtn.addEventListener('click', () => {
+                const dataStr = JSON.stringify(this.store.state, null, 2);
+                const blob = new Blob([dataStr], { type: "application/json" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `habit-backup-${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+        }
+
+        // Import
+        const importTrigger = document.getElementById('import-btn-trigger');
+        const fileInput = document.getElementById('import-file');
+
+        if (importTrigger && fileInput) {
+            importTrigger.addEventListener('click', () => fileInput.click());
+
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const success = this.store.importState(event.target.result);
+                    if (success) {
+                        alert("Data imported successfully! Reloading...");
+                        location.reload();
+                    } else {
+                        alert("Failed to import data. Invalid file format.");
+                    }
+                };
+                reader.readAsText(file);
+            });
+        }
+
         // Delegate task events
         this.dom.taskList.addEventListener('click', (e) => {
             const card = e.target.closest('.task-card');
